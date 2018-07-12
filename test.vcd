@@ -1,0 +1,28 @@
+$date
+	Wed Jun 27 23:13:10 2018
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module alu_tb $end
+$var wire 16 ! out [15:0] $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b0 !
+$end
+#10
+b101 !
+#20
+b100000100 !
+#30
+b101 !
+#40
+b1111111111111010 !
+#50
+b101 !
+#60
