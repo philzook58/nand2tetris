@@ -2,12 +2,28 @@ module Main where
 
 import Lib
 import Text.Parsec
+import Text.Parsec.Token as Tok
+import Text.Parsec.Language (emptyDef)
 
 main :: IO ()
 main = parseTest (oneOf "aeiou") "a" -- someFunc
 
+lexer :: Tok.TokenParser ()
+lexer = makeTokenParser style
+  where
+    ops = ["@","=",";","-","+",""]
+    names = registers ++ ["A","M","D"]
+    IO' = ["SCREEN", "KBD"]
+    
+    style = emptyDef {
+               Tok.commentLine = "//"
+             , Tok.reservedOpNames = ops
+             , Tok.caseSensitive = True
+             , Tok.reservedNames = names
+             }
 
-
+registers = map ('R':) $ map show [0 .. 15]
+jumps = ["JEQ", "JGT", "JGE", "JLT", "JLE", "JMP", "JNE", ]
 --manyOf line  eof
 {-
 regD = char 'D'
@@ -31,6 +47,7 @@ xreg = read . return <$> oneOf "DMA"{-do
 					'D' -> XD
 					'M' -> XM
 					'A' -> XA -}
+{-					
 yreg :: Parsec String () Y
 yreg = 	do
 		r <- oneOf "DMA1"
@@ -48,6 +65,8 @@ cinstr = anyChar
 var = Var <$> (:) <$> letter <*> many alphaNum
 
 ainstr =  char "@" >> (numericLit <|> Var 
+-}
+
 {-
 parsefile = many $ do
 			many comment 
